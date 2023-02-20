@@ -39,12 +39,14 @@ open class BaseFragment<VM: BaseViewModel<STATE>, STATE: UiState>: Fragment(), O
         observeState()
     }
 
-    protected open fun observeState() {
+
+    private fun observeState() {
         viewModel.uiState().observe(this){
             handleState(it)
         }
     }
 
+    // state handler that is called each time state is updated
     open fun handleState(newState: STATE){}
 
 

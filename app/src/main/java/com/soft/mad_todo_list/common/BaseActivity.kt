@@ -19,7 +19,16 @@ open class BaseActivity<VM: BaseViewModel<STATE>, STATE: UiState>: AppCompatActi
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
         viewModel = initializeViewModel()
+        observeState()
     }
+
+    private fun observeState() {
+        viewModel.uiState().observe(this){
+            handleState(it)
+        }
+    }
+
+    protected open fun handleState(it: STATE) {}
 
     private fun initializeViewModel(): VM {
         return ViewModelProvider(this)[viewModelType]
